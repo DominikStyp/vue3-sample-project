@@ -1,12 +1,9 @@
 import { reactive, ref } from 'vue'
 import { login as loginApi, type LoginResponse } from '@/services/authService'
+import { validateForm } from '@/utils/validateForm'
+import { FormFields } from '@/types/formFields'
+import { FormErrors } from '@/types/formErrors'
 
-export type LoginForm = {
-  email: string
-  password: string
-}
-
-export type LoginErrors = Partial<Record<keyof LoginForm, string>>
 
 export type LoginResult =
   | { status: 'idle' }
@@ -14,45 +11,22 @@ export type LoginResult =
   | { status: 'error'; message: string }
 
 export function useLogin() {
-  const form = reactive<LoginForm>({
+  const form = reactive<FormFields>({
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false
   })
 
-  const errors = reactive<LoginErrors>({})
+  const errors = reactive<FormErrors>({})
   const loading = ref(false)
   const result = ref<LoginResult>({ status: 'idle' })
 
-  function isEmailLike(value: string) {
-    // Simple, readable email validation; replace with robust lib if needed.
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-  }
-
-  function validate(): boolean {
-    errors.email = ''
-    errors.password = ''
-
-    if (!form.email) {
-      errors.email = 'Email is required'
-    } else if (!isEmailLike(form.email)) {
-      errors.email = 'Email is invalid'
-    }
-
-    if (!form.password) {
-      errors.password = 'Password is required'
-    } else if (form.password.length < 8) {
-      errors.password = 'Password must be at least 8 characters'
-    }
-
-    return !errors.email && !errors.password
-  }
-
-  function clearError(field: keyof LoginForm) {
+  function clearError(field: keyof FormErrors) {
     errors[field] = ''
   }
 
   async function submit() {
-    if (!validate()) return
+    if (!validateForm(form)) return
 
     loading.value = true
     result.value = { status: 'idle' }
@@ -73,7 +47,7 @@ export function useLogin() {
     loading,
     result,
     submit,
-    validate,
+    validateForm,
     clearError
   }
 }

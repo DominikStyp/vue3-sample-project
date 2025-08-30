@@ -1,0 +1,1 @@
+export type FormErrors = { email?: string; password?: string }
