@@ -17,7 +17,7 @@ export function useLogin() {
   const result = ref<LoginResult>({ status: 'idle' })
 
   const submitDisabled = computed(() => {
-    return loading.value || !form.email || !form.password || Object.values(errors).some(error => error)
+    return loading.value || !form.email || !form.password || Object.values(errors).some(error => error.length > 0)
   });
 
   function reValidateField(field: keyof FormErrors) {
