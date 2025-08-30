@@ -1,6 +1,6 @@
 import { computed, reactive, ref } from 'vue'
 import { login as loginApi, type LoginResponse } from '@/services/authService'
-import { validateForm } from '@/utils/validateForm'
+import { validateField, validateForm } from '@/utils/validateForm'
 import { FormFields } from '@/types/formFields'
 import { FormErrors } from '@/types/formErrors'
 import { LoginResult } from '@/types/loginResult'
@@ -20,8 +20,8 @@ export function useLogin() {
     return loading.value || !form.email || !form.password || Object.values(errors).some(error => error)
   });
 
-  function reValidateField(field: keyof FormFields) {
-    validateForm(form, errors, field)
+  function reValidateField(field: keyof FormErrors) {
+    validateField(field, form, errors)
   }
 
   async function submit() {
