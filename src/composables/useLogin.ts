@@ -1,14 +1,9 @@
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { login as loginApi, type LoginResponse } from '@/services/authService'
 import { validateForm } from '@/utils/validateForm'
 import { FormFields } from '@/types/formFields'
 import { FormErrors } from '@/types/formErrors'
-
-
-export type LoginResult =
-  | { status: 'idle' }
-  | { status: 'success'; token: string; user: { id: string; email: string } }
-  | { status: 'error'; message: string }
+import { LoginResult } from '@/types/loginResult'
 
 export function useLogin() {
   const form = reactive<FormFields>({
@@ -21,12 +16,18 @@ export function useLogin() {
   const loading = ref(false)
   const result = ref<LoginResult>({ status: 'idle' })
 
-  function clearError(field: keyof FormErrors) {
-    errors[field] = ''
+  const submitDisabled = computed(() => {
+    return loading.value || !form.email || !form.password || Object.values(errors).some(error => error)
+  });
+
+  function reValidateField(field: keyof FormFields) {
+    validateForm(form, errors, field)
   }
 
   async function submit() {
-    if (!validateForm(form)) return
+    if (!validateForm(form, errors)){
+      return
+    }
 
     loading.value = true
     result.value = { status: 'idle' }
@@ -48,6 +49,7 @@ export function useLogin() {
     result,
     submit,
     validateForm,
-    clearError
+    submitDisabled,
+    reValidateField
   }
 }
