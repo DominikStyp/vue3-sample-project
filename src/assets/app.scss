@@ -7,7 +7,7 @@ main {
   position: relative;
   padding: 1.5rem;
   max-width: 420px;
-  margin: 2rem auto;
+  margin: 4rem auto;
   font-family: system-ui, sans-serif;
 }
 
@@ -28,7 +28,7 @@ nav {
 .nav-link {
   text-decoration: none;
   color: #333;
-  padding: 0.5rem;
+  padding: 0.7rem;
   border-bottom: 2px solid transparent;
 
   &:hover {

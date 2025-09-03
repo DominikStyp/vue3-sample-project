@@ -1,25 +1,36 @@
 <script setup lang="ts">
 import { useLogin } from '@/composables/useLogin'
-import LoginResult from '@/components/LoginResult.vue';
+import { useRouter } from 'vue-router';
+import { useLoginResultData } from '@/stores/loginResultData'
+
+const router = useRouter();
+const store = useLoginResultData()
 
 const {
   form,
   errors,
   submitDisabled,
-  result,
   submit,
+  result,
   reValidateField
 } = useLogin()
-</script>
 
-<script lang="ts">
-export default {};
+
+const onSubmit = async () => {
+  await submit();
+
+  if (result.value.status === 'success') {
+    console.log('Login successful, navigating to /logged-in', result.value);
+    store.put(result.value)
+    router.push({ name: 'logged-in' });
+  }
+};
 </script>
 
 <template>
   <h1>Login</h1>
 
-  <form @submit.prevent="submit" novalidate>
+  <form @submit.prevent="onSubmit" novalidate>
     <div id="container">
       <label id="email">
         <div>Email</div>
@@ -43,8 +54,6 @@ export default {};
       <button :disabled="submitDisabled" type="submit" :class="submitDisabled ? 'submitDisabled' : ''">
         Sign In
       </button>
-
-      <LoginResult :result="result" />
 
     </div>
   </form>

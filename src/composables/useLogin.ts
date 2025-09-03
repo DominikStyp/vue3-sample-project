@@ -5,10 +5,14 @@ import { FormFields } from '@/types/formFields'
 import { FormErrors } from '@/types/formErrors'
 import { LoginResult } from '@/types/loginResult'
 
+import { TEST_EMAIL, TEST_PASSWORD } from '@/services/authService'
+
+import { router } from '@/services/router'
+
 export function useLogin() {
   const form = reactive<FormFields>({
-    email: '',
-    password: '',
+    email: TEST_EMAIL,
+    password: TEST_PASSWORD,
     rememberMe: false
   })
 
@@ -35,8 +39,10 @@ export function useLogin() {
     try {
       const res: LoginResponse = await loginApi({ email: form.email, password: form.password })
       result.value = { status: 'success', token: res.token, user: res.user }
+      console.log('Login successful', result.value);
     } catch (err: any) {
       result.value = { status: 'error', message: err?.message ?? 'Login failed' }
+      console.log('Login error', result.value);
     } finally {
       loading.value = false
     }

@@ -5,13 +5,13 @@ function sleep(seconds: number) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 }
 
-const TEST_EMAIL = 'test@example.com';
-const TEST_PASSWORD = 'password123';
-const FAKE_TOKEN = 'fake-jwt-token-1234567890';
+export const TEST_EMAIL = 'test@example.com';
+export const TEST_PASSWORD = 'password123';
+export const FAKE_TOKEN = 'fake-jwt-token-1234567890';
 
 // In a real app, replace this with fetch/axios to your backend.
 export async function login({ email, password }: LoginRequest): Promise<LoginResponse> {
-  await sleep(3) // simulate network delay)
+  await sleep(1) // simulate network delay)
   
   const ok = email === TEST_EMAIL && password === TEST_PASSWORD
   
