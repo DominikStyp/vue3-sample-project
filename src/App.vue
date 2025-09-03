@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
-import Login from './components/Login.vue';
 </script>
 
 <template>
@@ -10,9 +9,9 @@ import Login from './components/Login.vue';
   </nav>
   <main>
     <RouterView v-slot="{ Component }">
-        <KeepAlive :include="['Login']" :max="10">
-          <component :is="Component" />
-        </KeepAlive>
+      <KeepAlive :include="['Login']" :max="10">
+        <component :is="Component" />
+      </KeepAlive>
     </RouterView>
   </main>
 </template>
