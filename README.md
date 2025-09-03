@@ -1,4 +1,4 @@
-# Vue 3 Login (extracted logic)
+# Vue 3 Composable
 
 Minimal Vue 3 + Vite + TypeScript example that extracts logic into a composable (`useLogin.ts`)
 and a service layer (`authService.ts`).
