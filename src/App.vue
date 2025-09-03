@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import Login from '@/components/Login.vue'
+import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
-  <main style="max-width: 420px; margin: 2rem auto; font-family: system-ui, sans-serif;">
-    <h1>Login Demo</h1>
-    <Login />
+  <nav>
+    <RouterLink to="/login" class="nav-link">Home</RouterLink>
+    <RouterLink to="/faq" class="nav-link">FAQ</RouterLink>
+  </nav>
+  <main>
+    <RouterView />
   </main>
 </template>
 
-<style scoped>
-h1 {
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
+<style lang="scss">
+@use "@/assets/app.scss";
 </style>

@@ -17,6 +17,8 @@ export default {};
 </script>
 
 <template>
+  <h1>Login</h1>
+
   <form @submit.prevent="submit" novalidate>
     <div id="container">
       <label id="email">
