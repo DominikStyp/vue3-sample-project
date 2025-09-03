@@ -5,14 +5,12 @@ import { FormFields } from '@/types/formFields'
 import { FormErrors } from '@/types/formErrors'
 import { LoginResult } from '@/types/loginResult'
 
-import { TEST_EMAIL, TEST_PASSWORD } from '@/services/authService'
-
-import { router } from '@/services/router'
+// import { TEST_EMAIL, TEST_PASSWORD } from '@/services/authService'
 
 export function useLogin() {
   const form = reactive<FormFields>({
-    email: TEST_EMAIL,
-    password: TEST_PASSWORD,
+    email: '', //TEST_EMAIL,
+    password: '', //TEST_PASSWORD,
     rememberMe: false
   })
 
